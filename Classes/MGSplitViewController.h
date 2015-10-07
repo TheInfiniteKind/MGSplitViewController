@@ -23,11 +23,10 @@ typedef enum _MGSplitViewDividerStyle {
 	id _delegate;
 	BOOL _vertical;
 	BOOL _masterBeforeDetail;
-	NSMutableArray *_viewControllers;
+	NSArray *_viewControllers;
 	UIBarButtonItem *_barButtonItem; // To be compliant with wacky UISplitViewController behaviour.
     UIPopoverController *_hiddenPopoverController; // Popover used to hold the master view if it's not always visible.
 	MGSplitDividerView *_dividerView; // View that draws the divider between the master and detail views.
-	NSArray *_cornerViews; // Views to draw the inner rounded corners between master and detail views.
 	float _splitPosition;
 	BOOL _reconfigurePopup;
 	MGSplitViewDividerStyle _dividerStyle; // Meta-setting which configures several aspects of appearance and behaviour.
@@ -42,9 +41,9 @@ typedef enum _MGSplitViewDividerStyle {
 @property (nonatomic, assign) float splitWidth; // width of split in pixels.
 @property (nonatomic, assign) BOOL allowsDraggingDivider; // whether to let the user drag the divider to alter the split position (default NO).
 
-@property (nonatomic, copy) NSArray *viewControllers; // array of UIViewControllers; master is at index 0, detail is at index 1.
-@property (nonatomic, retain) IBOutlet UIViewController *masterViewController; // convenience.
-@property (nonatomic, retain) IBOutlet UIViewController *detailViewController; // convenience.
+@property (nonatomic, readonly) NSArray *viewControllers; // array of UIViewControllers; master is at index 0, detail is at index 1.
+@property (nonatomic, retain) IBOutlet UIViewController *masterViewController;
+@property (nonatomic, retain) IBOutlet UIViewController *detailViewController;
 @property (nonatomic, retain) MGSplitDividerView *dividerView; // the view which draws the divider/split between master and detail.
 @property (nonatomic, assign) MGSplitViewDividerStyle dividerStyle; // style (and behaviour) of the divider between master and detail.
 
@@ -70,15 +69,6 @@ typedef enum _MGSplitViewDividerStyle {
 			This implementation was chosen so you don't need to recalculate equivalent splitPositions if the user toggles masterBeforeDetail themselves.
  */
 - (void)setDividerStyle:(MGSplitViewDividerStyle)newStyle animated:(BOOL)animate; // Allows for animation of dividerStyle changes. The property's regular setter is not animated.
-- (NSArray *)cornerViews;
-/*
- -cornerViews returns an NSArray of two MGSplitCornersView objects, used to draw the inner corners.
- The first view is the "leading" corners (top edge of screen for left/right split, left edge of screen for top/bottom split).
- The second view is the "trailing" corners (bottom edge of screen for left/right split, right edge of screen for top/bottom split).
- Do NOT modify them, except to:
-	1. Change their .cornerBackgroundColor
-	2. Change their .cornerRadius
- */
 
 @end
 

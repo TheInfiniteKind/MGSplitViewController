@@ -28,13 +28,6 @@
 }
 
 
-- (void)dealloc
-{
-	self.splitViewController = nil;
-	[super dealloc];
-}
-
-
 #pragma mark -
 #pragma mark Drawing
 
@@ -43,7 +36,6 @@
 {
 	if (splitViewController.dividerStyle == MGSplitViewDividerStyleThin) {
 		[super drawRect:rect];
-		
 	} else if (splitViewController.dividerStyle == MGSplitViewDividerStylePaneSplitter) {
 		// Draw gradient background.
 		CGRect bounds = self.bounds;
